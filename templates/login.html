@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Stockeify - تسجيل الدخول{% endblock %}
+{% block page_title %}تسجيل الدخول{% endblock %}
+
+{% block content %}
+<div class="form-container" style="max-width: 400px;">
+    <form method="post" action="{{ url_for("login") }}">
+        <label for="username">اسم المستخدم:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">كلمة المرور:</label>
+        <input type="password" id="password" name="password" required>
+
+        {# Add remember me checkbox if desired #}
+        {#
+        <div style="margin-bottom: 15px;">
+            <input type="checkbox" id="remember" name="remember">
+            <label for="remember" style="display: inline; font-weight: normal;">تذكرني</label>
+        </div>
+        #}
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">تسجيل الدخول</button>
+        </div>
+        <p style="margin-top: 15px; text-align: center;">
+            ليس لديك حساب؟ <a href="{{ url_for("signup") }}">إنشاء حساب جديد</a>
+        </p>
+    </form>
+</div>
+{% endblock %}

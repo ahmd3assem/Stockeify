@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Stockeify{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/style.css") }}">
+    <!-- Add link to an icon library if needed, e.g., Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="{{ url_for("static", filename="img/logo.png") }}" alt="Stockeify Logo" style="max-width: 80%; height: auto; margin-bottom: 10px;">
+        </div>
+        <ul>
+            <li><a href="{{ url_for("index") }}" class="{% if request.endpoint == "index" %}active{% endif %}"><i class="fas fa-plus-circle"></i> إضافة اشتراك</a></li>
+            <li><a href="{{ url_for("view_clients") }}" class="{% if request.endpoint == "view_clients" %}active{% endif %}"><i class="fas fa-list-alt"></i> عرض التتبع</a></li>
+            <!-- Add other links like Profile Settings, Logout later if needed -->
+            <!--
+            <li><a href="#"><i class="fas fa-cog"></i> إعدادات الملف الشخصي</a></li>
+            <li><a href="#"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</a></li>
+            -->
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="content-header">
+             <h1>{% block page_title %}{% endblock %}</h1>
+        </div>
+        <div class="content-body">
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</body>
+</html>

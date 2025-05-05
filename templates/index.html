@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}Stockeify - إضافة اشتراك{% endblock %}
+{% block page_title %}إضافة اشتراك جديد{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <form id="client-form" action="{{ url_for("add_client") }}" method="post">
+        <label for="client_name">اسم العميل:</label>
+        <input type="text" id="client_name" name="client_name" required>
+
+        <label for="client_number">رقم العميل:</label>
+        <input type="tel" id="client_number" name="client_number" required>
+
+        <label for="service_tag">نوع الخدمة:</label>
+        <select id="service_tag" name="service_tag" required onchange="toggleOtherServiceInput()">
+            <option value="" disabled selected>-- اختر الخدمة --</option>
+            <option value="Envato Elements">Envato Elements</option>
+            <option value="Freepik">Freepik</option>
+            <option value="Adobe Creative Cloud">Adobe Creative Cloud</option>
+            <option value="Shutterstock">Shutterstock</option>
+            <option value="Adobestock">Adobestock</option>
+            <option value="Midjourney">Midjourney</option>
+            <option value="Motion Array">Motion Array</option>
+            <option value="Canva Pro">Canva Pro</option>
+            <option value="Kaspersky">Kaspersky</option>
+            <option value="Office 365 Family">Office 365 Family</option>
+            <option value="Office 2016 - 2019 - 2021">Office 2016 - 2019 - 2021</option>
+            <option value="Windows 10/11 PRO">Windows 10/11 PRO</option>
+            <option value="ChatGPT-4o">ChatGPT-4o</option>
+            <option value="Autodesk">Autodesk</option>
+            <option value="Cup cut Pro">Cup cut Pro</option>
+            <option value="LinkedIn Premium">LinkedIn Premium</option>
+            <option value="Other Service">خدمة أخرى</option>
+        </select>
+        <input type="text" id="other_service_tag" name="other_service_tag" class="hidden-input" placeholder="يرجى تحديد الخدمة الأخرى">
+
+        <label for="service_details">تفاصيل الخدمة:</label>
+        <input type="text" id="service_details" name="service_details">
+
+        <label for="start_date">تاريخ بدء الاشتراك:</label>
+        <input type="date" id="start_date" name="start_date" required>
+
+        <label for="duration">المدة (بالأيام):</label>
+        <input type="number" id="duration" name="duration" min="1" required>
+
+        <label for="main_price">السعر الأساسي (تكلفة الخدمة):</label>
+        <input type="number" id="main_price" name="main_price" step="0.01" min="0" required>
+
+        <label for="additional_costs">التكاليف الإضافية:</label>
+        <input type="number" id="additional_costs" name="additional_costs" step="0.01" min="0" value="0">
+
+        <label for="client_type">نوع العميل:</label>
+        <select id="client_type" name="client_type" required onchange="toggleOtherClientTypeInput()">
+            <option value="" disabled selected>-- اختر النوع --</option>
+            <option value="whatsapp">واتساب</option>
+            <option value="messenger">ماسنجر</option>
+            <option value="other">أخرى</option>
+        </select>
+        <input type="text" id="other_client_type" name="other_client_type" class="hidden-input" placeholder="يرجى تحديد النوع الآخر">
+
+        <label for="installments">عدد الأقساط:</label>
+        <input type="number" id="installments" name="installments" min="0" value="0" required>
+
+        <label for="notes">ملاحظات:</label>
+        <textarea id="notes" name="notes"></textarea>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-success">إضافة اشتراك</button>
+            <button type="reset" class="btn btn-secondary">إلغاء</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function toggleOtherServiceInput() {
+        var select = document.getElementById("service_tag");
+        var input = document.getElementById("other_service_tag");
+        if (select.value === "Other Service") {
+            input.style.display = "block";
+            input.required = true;
+        } else {
+            input.style.display = "none";
+            input.required = false;
+            input.value = ""; // Clear the input when hidden
+        }
+    }
+
+    function toggleOtherClientTypeInput() {
+        var select = document.getElementById("client_type");
+        var input = document.getElementById("other_client_type");
+        if (select.value === "other") {
+            input.style.display = "block";
+            input.required = true;
+        } else {
+            input.style.display = "none";
+            input.required = false;
+            input.value = ""; // Clear the input when hidden
+        }
+    }
+
+    // Initialize visibility on page load
+    document.addEventListener("DOMContentLoaded", function() {
+        toggleOtherServiceInput();
+        toggleOtherClientTypeInput();
+    });
+</script>
+{% endblock %}
